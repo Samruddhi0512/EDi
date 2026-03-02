@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alumni Directory</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= BODY ================= */
+
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#020617;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Background Glow */
+
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(150px);
+    z-index:-1;
+}
+
+body::before{
+    background:#4f46e5;
+    top:-150px;
+    left:-150px;
+    animation:move1 12s infinite alternate;
+}
+
+body::after{
+    background:#06b6d4;
+    bottom:-150px;
+    right:-150px;
+    animation:move2 15s infinite alternate;
+}
+
+@keyframes move1{
+    from{transform:translate(0,0);}
+    to{transform:translate(100px,80px);}
+}
+
+@keyframes move2{
+    from{transform:translate(0,0);}
+    to{transform:translate(-120px,-60px);}
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    text-align:center;
+    padding:60px 20px 20px;
+}
+
+.header h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:#94a3b8;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+    display:flex;
+    justify-content:center;
+    margin:30px;
+}
+
+.search-box input{
+    width:350px;
+    padding:15px;
+    border-radius:30px;
+    border:none;
+    outline:none;
+    background:rgba(255,255,255,0.1);
+    color:white;
+}
+
+/* ================= GRID ================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+    padding:40px;
+}
+
+/* ================= CARD ================= */
+
+.card{
+    position:relative;
+    background:rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:30px;
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+    transition:0.4s;
+    text-align:center;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-12px) scale(1.03);
+    box-shadow:0 20px 50px rgba(79,70,229,0.4);
+}
+
+.card img{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-bottom:15px;
+}
+
+.company{
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.match{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:linear-gradient(45deg,#4f46e5,#06b6d4);
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.connect-btn{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#4f46e5,#06b6d4);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.connect-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(79,70,229,0.4);
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.modal-content{
+    background:#0f172a;
+    padding:40px;
+    border-radius:20px;
+    width:400px;
+    text-align:center;
+    animation:fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.close-btn{
+    position:absolute;
+    right:30px;
+    top:20px;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.skills span{
+    display:inline-block;
+    background:#1e293b;
+    padding:5px 12px;
+    border-radius:20px;
+    margin:5px;
+    font-size:12px;
+}
+
+.timeline div{
+    margin:6px 0;
+    color:#94a3b8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Explore Alumni Directory</h1>
+    <p>Connect with professionals based on your career goals</p>
+</div>
+
+<div class="search-box">
+    <input type="text" placeholder="Search by skills, company...">
+</div>
+
+<div class="grid">
+
+
+<!-- CARD 1 -->
+<div class="card" onclick="openModal('Rahul Sharma','Google • Software Engineer','https://randomuser.me/api/portraits/men/32.jpg')">
+    <div class="match">92% Match</div>
+    <img src="https://randomuser.me/api/portraits/men/32.jpg">
+    <h3>Rahul Sharma</h3>
+    <div class="company">Google • Software Engineer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 2 -->
+<div class="card" onclick="openModal('Priya Mehta','Microsoft • Data Scientist','https://randomuser.me/api/portraits/women/44.jpg')">
+    <div class="match">88% Match</div>
+    <img src="https://randomuser.me/api/portraits/women/44.jpg">
+    <h3>Priya Mehta</h3>
+    <div class="company">Microsoft • Data Scientist</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 3 -->
+<div class="card" onclick="openModal('Amit Kulkarni','Amazon • Cloud Engineer','https://randomuser.me/api/portraits/men/65.jpg')">
+    <div class="match">80% Match</div>
+    <img src="https://randomuser.me/api/portraits/men/65.jpg">
+    <h3>Amit Kulkarni</h3>
+    <div class="company">Amazon • Cloud Engineer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 4 -->
+<div class="card" onclick="openModal('Sneha Joshi','Adobe • UX Designer','https://randomuser.me/api/portraits/women/68.jpg')">
+    <div class="match">85% Match</div>
+    <img src="https://randomuser.me/api/portraits/women/68.jpg">
+    <h3>Sneha Joshi</h3>
+    <div class="company">Adobe • UX Designer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 5 -->
+<div class="card" onclick="openModal('Rohan Patil','Infosys • Backend Developer','https://randomuser.me/api/portraits/men/22.jpg')">
+    <div class="match">78% Match</div>
+    <img src="https://randomuser.me/api/portraits/men/22.jpg">
+    <h3>Rohan Patil</h3>
+    <div class="company">Infosys • Backend Developer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 6 -->
+<div class="card" onclick="openModal('Ananya Kulkarni','Netflix • Product Manager','https://randomuser.me/api/portraits/women/12.jpg')">
+    <div class="match">90% Match</div>
+    <img src="https://randomuser.me/api/portraits/women/12.jpg">
+    <h3>Ananya Kulkarni</h3>
+    <div class="company">Netflix • Product Manager</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 7 -->
+<div class="card" onclick="openModal('Karan Deshmukh','Tesla • Embedded Engineer','https://randomuser.me/api/portraits/men/41.jpg')">
+    <div class="match">82% Match</div>
+    <img src="https://randomuser.me/api/portraits/men/41.jpg">
+    <h3>Karan Deshmukh</h3>
+    <div class="company">Tesla • Embedded Engineer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 8 -->
+<div class="card" onclick="openModal('Neha Sharma','Meta • Frontend Developer','https://randomuser.me/api/portraits/women/29.jpg')">
+    <div class="match">87% Match</div>
+    <img src="https://randomuser.me/api/portraits/women/29.jpg">
+    <h3>Neha Sharma</h3>
+    <div class="company">Meta • Frontend Developer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 9 -->
+<div class="card" onclick="openModal('Vikram Singh','IBM • Data Engineer','https://randomuser.me/api/portraits/men/55.jpg')">
+    <div class="match">75% Match</div>
+    <img src="https://randomuser.me/api/portraits/men/55.jpg">
+    <h3>Vikram Singh</h3>
+    <div class="company">IBM • Data Engineer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 10 -->
+<div class="card" onclick="openModal('Pooja Verma','Oracle • DBA','https://randomuser.me/api/portraits/women/33.jpg')">
+    <div class="match">79% Match</div>
+    <img src="https://randomuser.me/api/portraits/women/33.jpg">
+    <h3>Pooja Verma</h3>
+    <div class="company">Oracle • Database Admin</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 11 -->
+<div class="card" onclick="openModal('Arjun Nair','Flipkart • DevOps Engineer','https://randomuser.me/api/portraits/men/77.jpg')">
+    <div class="match">84% Match</div>
+    <img src="https://randomuser.me/api/portraits/men/77.jpg">
+    <h3>Arjun Nair</h3>
+    <div class="company">Flipkart • DevOps Engineer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+<!-- CARD 12 -->
+<div class="card" onclick="openModal('Meera Iyer','Google • AI Engineer','https://randomuser.me/api/portraits/women/50.jpg')">
+    <div class="match">93% Match</div>
+    <img src="https://randomuser.me/api/portraits/women/50.jpg">
+    <h3>Meera Iyer</h3>
+    <div class="company">Google • AI Engineer</div>
+    <button class="connect-btn">Connect</button>
+</div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" id="profileModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <img id="modalImg" width="90" style="border-radius:50%;">
+        <h2 id="modalName"></h2>
+        <p id="modalCompany" style="color:#94a3b8;"></p>
+
+        <div class="skills">
+            <span>Java</span>
+            <span>Cloud</span>
+            <span>System Design</span>
+        </div>
+
+        <h3>Career Journey</h3>
+        <div class="timeline">
+            <div>2019 — Intern</div>
+            <div>2020 — TCS</div>
+            <div>2023 — Current Role</div>
+        </div>
+
+        <button class="connect-btn">Send Connection Request</button>
+    </div>
+</div>
+
+<script>
+
+function openModal(name, company, img){
+    document.getElementById("profileModal").style.display = "flex";
+    document.getElementById("modalName").innerText = name;
+    document.getElementById("modalCompany").innerText = company;
+    document.getElementById("modalImg").src = img;
+}
+
+function closeModal(){
+    document.getElementById("profileModal").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
